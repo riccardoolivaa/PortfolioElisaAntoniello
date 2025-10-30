@@ -9,38 +9,33 @@ export function getAllProjects() {
   const projectsDirectory = path.join(contentDirectory, 'projects');
   
   if (!fs.existsSync(projectsDirectory)) {
-    console.log('Projects directory does not exist, returning empty array');
     return [];
   }
 
-  try {
-    const fileNames = fs.readdirSync(projectsDirectory);
-    const projects = fileNames
-      .filter(fileName => fileName.endsWith('.md'))
-      .map(fileName => {
-        const slug = fileName.replace(/\.md$/, '');
-        const fullPath = path.join(projectsDirectory, fileName);
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
-        const { data, content } = matter(fileContents);
+  const fileNames = fs.readdirSync(projectsDirectory);
+  const projects = fileNames
+    .filter(fileName => fileName.endsWith('.md'))
+    .map(fileName => {
+      const slug = fileName.replace(/\.md$/, '');
+      const fullPath = path.join(projectsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data, content } = matter(fileContents);
 
-        return {
-          slug,
-          ...data,
-          content,
-        };
-      })
-      .sort((a: any, b: any) => {
-        const dateA = new Date(a.date || 0).getTime();
-        const dateB = new Date(b.date || 0).getTime();
-        return dateB - dateA; // Ordine decrescente (più recente prima)
-      });
+      return {
+        slug,
+        ...data,
+        content,
+      };
+    })
+    .sort((a: any, b: any) => {
+      if (a.date < b.date) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
 
-    console.log(`Loaded ${projects.length} projects from CMS`);
-    return projects;
-  } catch (error) {
-    console.error('Error reading projects:', error);
-    return [];
-  }
+  return projects;
 }
 
 // Legge un singolo progetto per slug
@@ -49,74 +44,17 @@ export function getProjectBySlug(slug: string) {
   const fullPath = path.join(projectsDirectory, `${slug}.md`);
   
   if (!fs.existsSync(fullPath)) {
-    console.log(`Project not found: ${slug}`);
     return null;
   }
 
-  try {
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
 
-    return {
-      slug,
-      ...data,
-      content,
-    };
-  } catch (error) {
-    console.error(`Error reading project ${slug}:`, error);
-    return null;
-  }
-}
-
-// Legge tutte le immagini della gallery
-export function getAllGalleryImages() {
-  const galleryDirectory = path.join(contentDirectory, 'gallery');
-  
-  if (!fs.existsSync(galleryDirectory)) {
-    console.log('Gallery directory does not exist, returning empty array');
-    return [];
-  }
-
-  try {
-    const fileNames = fs.readdirSync(galleryDirectory);
-    const images = fileNames
-      .filter(fileName => fileName.endsWith('.md'))
-      .map(fileName => {
-        const fullPath = path.join(galleryDirectory, fileName);
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
-        const { data } = matter(fileContents);
-
-        return {
-          id: fileName.replace(/\.md$/, ''),
-          ...data,
-        };
-      })
-      .sort((a: any, b: any) => {
-        // Prima ordina per order se presente
-        if (a.order !== undefined && b.order !== undefined) {
-          return a.order - b.order;
-        }
-        // Altrimenti per data
-        const dateA = new Date(a.date || 0).getTime();
-        const dateB = new Date(b.date || 0).getTime();
-        return dateB - dateA;
-      });
-
-    console.log(`Loaded ${images.length} gallery images from CMS`);
-    return images;
-  } catch (error) {
-    console.error('Error reading gallery:', error);
-    return [];
-  }
-}
-
-// Filtra immagini gallery per categoria
-export function getGalleryImagesByCategory(category: string) {
-  const allImages = getAllGalleryImages();
-  if (category === 'all') {
-    return allImages;
-  }
-  return allImages.filter((img: any) => img.category === category);
+  return {
+    slug,
+    ...data,
+    content,
+  };
 }
 
 // Legge le impostazioni generali
@@ -124,11 +62,10 @@ export function getSiteSettings() {
   const settingsPath = path.join(contentDirectory, 'settings', 'general.yml');
   
   if (!fs.existsSync(settingsPath)) {
-    console.log('Settings file not found, using defaults');
     return {
       siteName: 'Elisa Antoniello',
       tagline: 'Allestimento Scenico - Accademia Teatro alla Scala',
-      email: 'ellimj9@gmail.com',
+      email: 'ellimj04@gmail.com',
       phone: '+39 388 394 0674',
       whatsapp: '393883940674',
       instagram: 'elisaantoniello',
@@ -136,28 +73,9 @@ export function getSiteSettings() {
     };
   }
 
-  try {
-    const fileContents = fs.readFileSync(settingsPath, 'utf8');
-    const { data } = matter(fileContents);
-    
-    // Assicura che ci sia sempre un path per il CV
-    if (!data.cvFile) {
-      data.cvFile = '/cv/Curriculum_Elisa_Antoniello.pdf';
-    }
-    
-    return data;
-  } catch (error) {
-    console.error('Error reading settings:', error);
-    return {
-      siteName: 'Elisa Antoniello',
-      tagline: 'Allestimento Scenico - Accademia Teatro alla Scala',
-      email: 'ellimj9@gmail.com',
-      phone: '+39 388 394 0674',
-      whatsapp: '393883940674',
-      instagram: 'elisaantoniello',
-      cvFile: '/cv/Curriculum_Elisa_Antoniello.pdf',
-    };
-  }
+  const fileContents = fs.readFileSync(settingsPath, 'utf8');
+  const { data } = matter(fileContents);
+  return data;
 }
 
 // Legge la pagina About
@@ -165,10 +83,9 @@ export function getAboutPage() {
   const aboutPath = path.join(contentDirectory, 'pages', 'about.md');
   
   if (!fs.existsSync(aboutPath)) {
-    console.log('About page not found, using defaults');
     return {
       title: 'Chi Sono',
-      tagline: 'Una studentessa appassionata di allestimento scenico che trasforma visioni teatrali in realtà',
+      tagline: 'Studentessa di Allestimento Scenico',
       bio: '',
       skills: [],
       content: '',
@@ -178,33 +95,19 @@ export function getAboutPage() {
     };
   }
 
-  try {
-    const fileContents = fs.readFileSync(aboutPath, 'utf8');
-    const { data, content } = matter(fileContents);
+  const fileContents = fs.readFileSync(aboutPath, 'utf8');
+  const { data, content } = matter(fileContents);
 
-    return {
-      title: data.title || 'Chi Sono',
-      tagline: data.tagline || 'Una studentessa appassionata di allestimento scenico',
-      bio: data.bio || '',
-      skills: data.skills || [],
-      content: content || '',
-      client: data.client || '',
-      role: data.role || '',
-      team: data.team || [],
-    };
-  } catch (error) {
-    console.error('Error reading about page:', error);
-    return {
-      title: 'Chi Sono',
-      tagline: 'Una studentessa appassionata di allestimento scenico',
-      bio: '',
-      skills: [],
-      content: '',
-      client: '',
-      role: '',
-      team: [],
-    };
-  }
+  return {
+    title: data.title || 'Chi Sono',
+    tagline: data.tagline || 'Studentessa di Allestimento Scenico',
+    bio: data.bio || '',
+    skills: data.skills || [],
+    content: content || '',
+    client: data.client || '',
+    role: data.role || '',
+    team: data.team || [],
+  };
 }
 
 // Legge le immagini statiche del sito
@@ -212,7 +115,6 @@ export function getSiteImages() {
   const imagesPath = path.join(contentDirectory, 'settings', 'site-images.yml');
   
   if (!fs.existsSync(imagesPath)) {
-    console.log('Site images config not found, using defaults');
     return {
       heroImage: '/images/hero-placeholder.png',
       aboutProfessional: '/images/about-professional.png',
@@ -222,20 +124,9 @@ export function getSiteImages() {
     };
   }
 
-  try {
-    const fileContents = fs.readFileSync(imagesPath, 'utf8');
-    const { data } = matter(fileContents);
-    return data;
-  } catch (error) {
-    console.error('Error reading site images:', error);
-    return {
-      heroImage: '/images/hero-placeholder.png',
-      aboutProfessional: '/images/about-professional.png',
-      aboutBackstage: '/images/about-backstage.jpg',
-      aboutPreview: '/images/about-professional.png',
-      logo: '/images/logo.png',
-    };
-  }
+  const fileContents = fs.readFileSync(imagesPath, 'utf8');
+  const { data } = matter(fileContents);
+  return data;
 }
 
 // Legge le impostazioni del chatbot
@@ -250,17 +141,8 @@ export function getChatbotSettings() {
     };
   }
 
-  try {
-    const fileContents = fs.readFileSync(chatbotPath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    console.error('Error reading chatbot settings:', error);
-    return {
-      name: 'La Maschera di Scena',
-      welcomeMessage: 'Ciao! 🎭 Come posso aiutarti?',
-      responses: {},
-    };
-  }
+  const fileContents = fs.readFileSync(chatbotPath, 'utf8');
+  return JSON.parse(fileContents);
 }
 
 // Filtra progetti per categoria
@@ -280,15 +162,59 @@ export function getAllProjectSlugs() {
     return [];
   }
 
-  try {
-    const fileNames = fs.readdirSync(projectsDirectory);
-    return fileNames
-      .filter(fileName => fileName.endsWith('.md'))
-      .map(fileName => ({
-        slug: fileName.replace(/\.md$/, ''),
-      }));
-  } catch (error) {
-    console.error('Error getting project slugs:', error);
+  const fileNames = fs.readdirSync(projectsDirectory);
+  return fileNames
+    .filter(fileName => fileName.endsWith('.md'))
+    .map(fileName => ({
+      slug: fileName.replace(/\.md$/, ''),
+    }));
+}
+
+// Legge tutte le immagini della gallery
+export function getAllGalleryImages() {
+  const galleryDirectory = path.join(contentDirectory, 'gallery');
+  
+  if (!fs.existsSync(galleryDirectory)) {
     return [];
   }
+
+  const fileNames = fs.readdirSync(galleryDirectory);
+  const images = fileNames
+    .filter(fileName => fileName.endsWith('.md'))
+    .map(fileName => {
+      const fullPath = path.join(galleryDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data } = matter(fileContents);
+
+      return {
+        id: fileName.replace(/\.md$/, ''),
+        src: data.image,
+        alt: data.alt || data.title,
+        category: data.category,
+        title: data.title,
+        date: data.date,
+        order: data.order || 0,
+      };
+    })
+    .sort((a: any, b: any) => {
+      // Ordina per campo 'order' se presente, altrimenti per data
+      if (a.order !== b.order) {
+        return a.order - b.order;
+      }
+      if (a.date && b.date) {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+      return 0;
+    });
+
+  return images;
+}
+
+// Filtra immagini della gallery per categoria
+export function getGalleryImagesByCategory(category: string) {
+  const allImages = getAllGalleryImages();
+  if (category === 'all' || !category) {
+    return allImages;
+  }
+  return allImages.filter((image: any) => image.category === category);
 }

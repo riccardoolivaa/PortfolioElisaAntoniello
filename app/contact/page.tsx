@@ -1,37 +1,9 @@
-'use client';
-
-import { useState } from 'react';
-import { MessageCircle, Instagram, Mail, Send } from 'lucide-react';
-
-// Import dei dati dal CMS lato client
 import { getSiteSettings } from '@/lib/cms';
+import ContactForm from '@/components/contact/ContactForm';
+import { MessageCircle, Instagram, Mail } from 'lucide-react';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  // Carica le impostazioni del sito
   const settings = getSiteSettings();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Create WhatsApp message
-    const whatsappMessage = `Ciao! Mi chiamo ${formData.name}.%0A%0A${formData.message}%0A%0AEmail: ${formData.email}`;
-    const whatsappUrl = `https://wa.me/${settings.whatsapp}?text=${whatsappMessage}`;
-    
-    window.open(whatsappUrl, '_blank');
-  };
 
   return (
     <div className="pt-24">
@@ -39,10 +11,10 @@ export default function Contact() {
       <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom">
           <h1 className="text-5xl md:text-6xl font-serif mb-6 animate-fade-in">
-            Contatti
+            Contattami
           </h1>
           <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
-            Collaboriamo insieme alla tua prossima produzione teatrale o discutiamo opportunità di design
+            Collaboriamo insieme alla tua prossima produzione teatrale o discutiamo di opportunità di design
           </p>
         </div>
       </section>
@@ -57,78 +29,13 @@ export default function Contact() {
                 Invia un Messaggio
               </h2>
               <p className="text-primary-600 mb-8">
-                Compila il modulo qui sotto e ti ricontatterò tramite WhatsApp il prima possibile.
+                Compila il modulo qui sotto e ti risponderò via WhatsApp il prima possibile.
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-primary-700 mb-2"
-                  >
-                    Il Tuo Nome
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-primary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent transition-all"
-                    placeholder="Mario Rossi"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-primary-700 mb-2"
-                  >
-                    La Tua Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-primary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent transition-all"
-                    placeholder="mario@esempio.com"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-primary-700 mb-2"
-                  >
-                    Il Tuo Messaggio
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    className="w-full px-4 py-3 border border-primary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent transition-all resize-none"
-                    placeholder="Raccontami del tuo progetto o della tua richiesta..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full btn-primary flex items-center justify-center gap-3"
-                >
-                  <Send size={20} />
-                  Invia tramite WhatsApp
-                </button>
-              </form>
+              <ContactForm whatsapp={settings.whatsapp} />
 
               <p className="text-sm text-primary-500 mt-4 text-center">
-                Questo modulo aprirà WhatsApp con il tuo messaggio pre-compilato
+                Questo modulo aprirà WhatsApp con il tuo messaggio precompilato
               </p>
             </div>
 
@@ -138,7 +45,7 @@ export default function Contact() {
                 Informazioni di Contatto
               </h2>
               <p className="text-primary-600 mb-8">
-                Preferisci un contatto diretto? Raggiungimi attraverso uno di questi canali.
+                Preferisci un contatto diretto? Contattami attraverso uno di questi canali.
               </p>
 
               <div className="space-y-6">
@@ -211,7 +118,7 @@ export default function Contact() {
                 </h3>
                 <p className="text-primary-600">
                   Attualmente studio presso l'Accademia Teatro alla Scala. Disponibile per progetti a Milano 
-                  e zone limitrofe, oltre a consulenze da remoto.
+                  e dintorni, oltre a consulenze da remoto.
                 </p>
               </div>
             </div>
@@ -222,7 +129,7 @@ export default function Contact() {
       {/* CTA Section */}
       <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom text-center">
-          <h2 className="text-4xl font-serif mb-6">Pronta a Collaborare?</h2>
+          <h2 className="text-4xl font-serif mb-6">Pronto a Collaborare?</h2>
           <p className="text-xl text-black/80 mb-8 max-w-2xl mx-auto">
             Che tu stia pianificando una produzione o esplorando possibilità creative, 
             mi piacerebbe sentire del tuo progetto.

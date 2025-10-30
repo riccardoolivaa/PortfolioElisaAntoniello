@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Download, Theater, Lightbulb, Volume2, Camera, Wrench } from 'lucide-react';
 import Link from 'next/link';
-import { getAboutPage, getSiteImages } from '@/lib/cms';
+import { getAboutPage, getSiteImages, getSiteSettings } from '@/lib/cms';
 import ReactMarkdown from 'react-markdown';
 
 const iconMap: Record<string, any> = {
@@ -22,6 +22,7 @@ const colorMap: Record<string, { text: string; bg: string }> = {
 export default function About() {
   const aboutData = getAboutPage();
   const images = getSiteImages();
+  const settings = getSiteSettings();
 
   return (
     <div className="pt-24">
@@ -29,10 +30,10 @@ export default function About() {
       <section className="section-padding bg-cream text-black">
         <div className="container-custom">
           <h1 className="text-5xl md:text-6xl font-serif mb-6 animate-fade-in">
-            {aboutData.title || 'About Me'}
+            {aboutData.title || 'Chi Sono'}
           </h1>
           <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
-            {aboutData.tagline || 'A passionate scenic design student transforming theatrical visions into reality'}
+            {aboutData.tagline || 'Una studentessa appassionata di allestimento scenico che trasforma visioni teatrali in realtà'}
           </p>
         </div>
       </section>
@@ -46,7 +47,7 @@ export default function About() {
               <div className="relative h-[500px] rounded-2xl overflow-hidden stage-shadow">
                 <Image
                   src={images.aboutProfessional}
-                  alt="Elisa Antoniello - Professional"
+                  alt="Elisa Antoniello - Professionale"
                   fill
                   className="object-cover"
                 />
@@ -54,7 +55,7 @@ export default function About() {
               <div className="relative h-64 rounded-2xl overflow-hidden stage-shadow">
                 <Image
                   src={images.aboutBackstage}
-                  alt="Elisa at work backstage"
+                  alt="Elisa al lavoro dietro le quinte"
                   fill
                   className="object-cover"
                 />
@@ -64,17 +65,25 @@ export default function About() {
             {/* Bio Text */}
             <div>
               <h2 className="text-3xl font-serif text-stone-900 mb-6">
-                Bringing Stories to Life Through Design
+                Dare Vita alle Storie Attraverso il Design
               </h2>
               
               <div className="prose prose-stone prose-lg max-w-none">
-                <ReactMarkdown>{aboutData.bio || aboutData.content}</ReactMarkdown>
+                {aboutData.bio ? (
+                  <ReactMarkdown>{aboutData.bio}</ReactMarkdown>
+                ) : (
+                  <p>
+                    Studentessa di allestimento scenico presso l'Accademia Teatro alla Scala di Milano, 
+                    dove perseguo la mia passione per la creazione di esperienze teatrali immersive.
+                  </p>
+                )}
+                {aboutData.content && <ReactMarkdown>{aboutData.content}</ReactMarkdown>}
               </div>
 
               <div className="mt-8">
                 <Link href="/cv" className="btn-primary inline-flex items-center gap-2">
                   <Download size={20} />
-                  Download Full CV
+                  Scarica CV Completo
                 </Link>
               </div>
             </div>
@@ -86,7 +95,7 @@ export default function About() {
       <section className="section-padding bg-cream-100">
         <div className="container-custom">
           <h2 className="text-4xl font-serif text-stone-900 mb-12 text-center">
-            Technical Competencies
+            Competenze Tecniche
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -106,7 +115,7 @@ export default function About() {
                         <p className="text-stone-600 text-sm mb-3">{skill.description}</p>
                         <div className="space-y-2">
                           <div className="flex justify-between items-center">
-                            <span className="text-stone-700 text-sm">Proficiency</span>
+                            <span className="text-stone-700 text-sm">Competenza</span>
                             <span className="text-bronze-600 font-medium">{skill.level}%</span>
                           </div>
                           <div className="w-full bg-stone-200 rounded-full h-2">
@@ -130,11 +139,14 @@ export default function About() {
                       <Theater size={24} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-stone-900 mb-3">Scenic Design</h3>
+                      <h3 className="text-xl font-semibold text-stone-900 mb-3">Allestimento Scenico</h3>
+                      <p className="text-stone-600 text-sm mb-3">
+                        Progettazione e costruzione di scenografie teatrali
+                      </p>
                       <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-stone-700">Set Construction</span>
-                          <span className="text-bronze-600 font-medium">Advanced</span>
+                          <span className="text-stone-700">Costruzione Set</span>
+                          <span className="text-bronze-600 font-medium">Avanzato</span>
                         </div>
                         <div className="w-full bg-stone-200 rounded-full h-2">
                           <div className="bg-bronze-500 h-2 rounded-full" style={{ width: '90%' }} />
@@ -152,12 +164,12 @@ export default function About() {
       {/* CTA Section */}
       <section className="section-padding bg-bronze-500 text-cream">
         <div className="container-custom text-center">
-          <h2 className="text-4xl font-serif mb-6">Let's Create Together</h2>
+          <h2 className="text-4xl font-serif mb-6">Creiamo Insieme</h2>
           <p className="text-xl text-cream/90 mb-8 max-w-2xl mx-auto">
-            Interested in collaborating on a theatrical production or learning more about my work?
+            Interessato a collaborare su una produzione teatrale o a saperne di più sul mio lavoro?
           </p>
           <Link href="/contact" className="bg-cream text-bronze-700 px-8 py-3 rounded-lg font-medium hover:bg-cream-100 transition-all duration-300 inline-block">
-            Get in Touch
+            Contattami
           </Link>
         </div>
       </section>

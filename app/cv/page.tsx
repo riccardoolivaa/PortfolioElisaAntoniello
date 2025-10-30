@@ -1,6 +1,10 @@
 import { Download, FileText } from 'lucide-react';
+import { getSiteSettings } from '@/lib/cms';
 
 export default function CV() {
+  const settings = getSiteSettings();
+  const cvFile = settings.cvFile || '/cv/Curriculum_Elisa_Antoniello.pdf';
+
   return (
     <div className="pt-24">
       {/* Hero Section */}
@@ -10,7 +14,7 @@ export default function CV() {
             Curriculum Vitae
           </h1>
           <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
-            Professional experience, education, and skills in scenic design and theatrical production
+            Esperienza professionale, formazione e competenze in allestimento scenico e produzioni teatrali
           </p>
         </div>
       </section>
@@ -19,12 +23,12 @@ export default function CV() {
       <section className="py-12 bg-white">
         <div className="container-custom text-center">
           <a
-            href="/cv/Elisa_Antonielo_CV.pdf"
-            download
+            href={cvFile}
+            download="Curriculum_Elisa_Antoniello.pdf"
             className="btn-primary inline-flex items-center gap-3"
           >
             <Download size={24} />
-            Download CV (PDF)
+            Scarica CV (PDF)
           </a>
         </div>
       </section>
@@ -33,149 +37,142 @@ export default function CV() {
       <section className="section-padding bg-warm-gray">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
-            {/* CV Content - Alternative to PDF embed */}
+            {/* CV Content */}
             <div className="bg-white rounded-xl stage-shadow p-8 md:p-12">
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-serif text-primary-900 mb-2">
-                  Elisa Antonielo
+                  Elisa Antoniello
                 </h2>
-                <p className="text-xl text-primary-600">Scenic Design Student</p>
+                <p className="text-xl text-primary-600">Studentessa</p>
                 <p className="text-primary-500 mt-2">
-                  Milano, Italy · elisa.antonielo@example.com · +39 123 456 7890
+                  +39 388 394 0674 · ellimj9@gmail.com
                 </p>
               </div>
 
               <div className="space-y-12">
-                {/* Education */}
+                {/* Su di me */}
                 <div>
                   <h3 className="text-2xl font-serif text-primary-900 mb-6 pb-2 border-b-2 border-accent">
-                    Education
+                    Su di Me
                   </h3>
-                  <div className="space-y-6">
-                    <div>
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="text-lg font-semibold text-primary-900">
-                          Scenic Design Course
-                        </h4>
-                        <span className="text-primary-600">2023 - Present</span>
-                      </div>
-                      <p className="text-primary-700 font-medium">
-                        Teatro alla Scala Academy, Milan
-                      </p>
-                      <p className="text-primary-600 mt-2">
-                        Comprehensive training in stage design, lighting, audio engineering, and theatrical production. 
-                        Specializing in contemporary approaches to classical theater spaces.
-                      </p>
-                    </div>
-                  </div>
+                  <p className="text-primary-700">
+                    Solare e professionale, disponibile e flessibile per gli orari e ritmi di lavoro.
+                  </p>
                 </div>
 
-                {/* Professional Experience */}
+                {/* Istruzione e formazione */}
                 <div>
                   <h3 className="text-2xl font-serif text-primary-900 mb-6 pb-2 border-b-2 border-accent">
-                    Professional Experience
+                    Istruzione e Formazione
                   </h3>
                   <div className="space-y-6">
                     <div>
                       <div className="flex justify-between items-start mb-2">
                         <h4 className="text-lg font-semibold text-primary-900">
-                          Scenic Design Assistant
+                          Diploma AFAM in Tecniche di allestimento scenico
                         </h4>
-                        <span className="text-primary-600">2024</span>
+                        <span className="text-primary-600">2024 - 2027</span>
                       </div>
                       <p className="text-primary-700 font-medium">
-                        Teatro alla Scala, Milan
+                        Accademia Teatro alla Scala, Milano
                       </p>
-                      <ul className="list-disc list-inside text-primary-600 mt-2 space-y-1">
-                        <li>Assisted lead designer on major opera production</li>
-                        <li>Coordinated with technical teams for set construction</li>
-                        <li>Managed design documentation and technical drawings</li>
-                      </ul>
                     </div>
 
                     <div>
                       <div className="flex justify-between items-start mb-2">
                         <h4 className="text-lg font-semibold text-primary-900">
-                          Lighting Design Intern
+                          Primo anno corso Teatro, Cinema e Media
                         </h4>
                         <span className="text-primary-600">2023 - 2024</span>
                       </div>
                       <p className="text-primary-700 font-medium">
-                        Teatro alla Scala Academy
+                        Università La Sapienza, Roma
                       </p>
-                      <ul className="list-disc list-inside text-primary-600 mt-2 space-y-1">
-                        <li>Programmed lighting for student productions</li>
-                        <li>Operated lighting consoles during rehearsals and performances</li>
-                        <li>Maintained lighting equipment and inventory</li>
-                      </ul>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="text-lg font-semibold text-primary-900">
+                          Diploma coreutico
+                        </h4>
+                        <span className="text-primary-600">2018 - 2023</span>
+                      </div>
+                      <p className="text-primary-700 font-medium">
+                        Liceo Matilde di Canossa, Reggio Emilia
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Skills */}
+                {/* Esperienza professionale */}
                 <div>
                   <h3 className="text-2xl font-serif text-primary-900 mb-6 pb-2 border-b-2 border-accent">
-                    Technical Skills
+                    Esperienza Professionale
                   </h3>
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-6">
                     <div>
-                      <h4 className="font-semibold text-primary-900 mb-3">Scenic Design</h4>
-                      <ul className="space-y-2 text-primary-600">
-                        <li>• Stage design & spatial planning</li>
-                        <li>• Set construction & model making</li>
-                        <li>• Technical drawing (AutoCAD, SketchUp)</li>
-                        <li>• Materials selection & budgeting</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-primary-900 mb-3">Lighting Design</h4>
-                      <ul className="space-y-2 text-primary-600">
-                        <li>• Lighting programming & control</li>
-                        <li>• Atmospheric design & color theory</li>
-                        <li>• Console operation (ETC, MA)</li>
-                        <li>• LED & conventional fixtures</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-primary-900 mb-3">Audio Engineering</h4>
-                      <ul className="space-y-2 text-primary-600">
-                        <li>• Sound design & mixing</li>
-                        <li>• Audio equipment setup</li>
-                        <li>• Acoustic management</li>
-                        <li>• Digital audio workstations</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-primary-900 mb-3">Photography</h4>
-                      <ul className="space-y-2 text-primary-600">
-                        <li>• Theatrical photography</li>
-                        <li>• Backstage documentation</li>
-                        <li>• Post-production & editing</li>
-                        <li>• Visual storytelling</li>
-                      </ul>
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="text-lg font-semibold text-primary-900">
+                          Staff Concorso CND - Organizzazione e gestione
+                        </h4>
+                        <span className="text-primary-600">2025</span>
+                      </div>
+                      <p className="text-primary-700 font-medium mb-2">
+                        Teatro Asioli, Correggio (RE)
+                      </p>
+                      <p className="text-primary-600">
+                        Ho gestito l'organizzazione dei candidati al concorso CND presso il teatro Asioli di Correggio (RE)
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Languages */}
+                {/* Competenze */}
                 <div>
                   <h3 className="text-2xl font-serif text-primary-900 mb-6 pb-2 border-b-2 border-accent">
-                    Languages
+                    Competenze
                   </h3>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <ul className="space-y-2 text-primary-700">
+                      <li>• Lavoro di squadra</li>
+                      <li>• Rapide capacità di apprendimento</li>
+                      <li>• Capacità di ascolto</li>
+                      <li>• Precisione e concentrazione</li>
+                    </ul>
+                    <ul className="space-y-2 text-primary-700">
+                      <li>• Professionalità</li>
+                      <li>• Flessibilità</li>
+                      <li>• Disponibilità</li>
+                      <li>• Organizzazione</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Lingue */}
+                <div>
+                  <h3 className="text-2xl font-serif text-primary-900 mb-6 pb-2 border-b-2 border-accent">
+                    Lingue
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <p className="font-semibold text-primary-900">Italian</p>
-                      <p className="text-primary-600">Native</p>
+                      <p className="font-semibold text-primary-900">Italiano</p>
+                      <p className="text-primary-600">Madrelingua</p>
                     </div>
                     <div>
-                      <p className="font-semibold text-primary-900">English</p>
-                      <p className="text-primary-600">Professional</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-primary-900">French</p>
-                      <p className="text-primary-600">Intermediate</p>
+                      <p className="font-semibold text-primary-900">Inglese</p>
+                      <p className="text-primary-600">B2</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Altro */}
+                <div>
+                  <h3 className="text-2xl font-serif text-primary-900 mb-6 pb-2 border-b-2 border-accent">
+                    Altro
+                  </h3>
+                  <p className="text-primary-700">
+                    Munita di patente B
+                  </p>
                 </div>
               </div>
             </div>
@@ -183,12 +180,12 @@ export default function CV() {
             {/* Download Button (Bottom) */}
             <div className="text-center mt-12">
               <a
-                href="/cv/Elisa_Antonielo_CV.pdf"
-                download
+                href={cvFile}
+                download="Curriculum_Elisa_Antoniello.pdf"
                 className="btn-primary inline-flex items-center gap-3"
               >
                 <FileText size={24} />
-                Download Full PDF Version
+                Scarica versione PDF completa
               </a>
             </div>
           </div>

@@ -8,7 +8,7 @@ const featuredProjects = [
   {
     id: 1,
     title: 'Opera Prima',
-    category: 'Scenic Design',
+    category: 'Allestimento Scenico',
     year: '2024',
     image: '/images/project-1.jpg',
     slug: 'opera-prima',
@@ -16,7 +16,7 @@ const featuredProjects = [
   {
     id: 2,
     title: 'Light Symphony',
-    category: 'Lighting Design',
+    category: 'Illuminotecnica',
     year: '2024',
     image: '/images/project-2.jpg',
     slug: 'light-symphony',
@@ -32,7 +32,7 @@ const featuredProjects = [
   {
     id: 4,
     title: 'Backstage Stories',
-    category: 'Photography',
+    category: 'Fotografia',
     year: '2023',
     image: '/images/project-4.jpg',
     slug: 'backstage-stories',
