@@ -93,12 +93,12 @@ export default function Portfolio() {
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="section-padding bg-primary-900 text-white">
+      <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom">
           <h1 className="text-5xl md:text-6xl font-serif mb-6 animate-fade-in">
             Portfolio
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl animate-fade-in animate-delay-100">
+          <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
             A curated collection of my work in scenic design, lighting, audio engineering, and theatrical photography
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function Portfolio() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? 'bg-accent text-white stage-shadow'
+                    ? 'bg-accent text-bronze-600 stage-shadow'
                     : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                 }`}
               >
@@ -141,20 +141,20 @@ export default function Portfolio() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-900/60 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
                   
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-black transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     <div className="flex items-center gap-2 text-accent-light mb-2">
                       <span className="text-sm font-medium">{project.category}</span>
                       <span className="text-sm">·</span>
                       <span className="text-sm">{project.year}</span>
                     </div>
                     <h3 className="text-2xl font-serif mb-2">{project.title}</h3>
-                    <p className="text-white/80 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-black/80 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {project.description}
                     </p>
                   </div>
 
                   <div className="absolute top-4 right-4 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ArrowRight className="text-white" size={20} />
+                    <ArrowRight className="text-black" size={20} />
                   </div>
                 </div>
               </Link>

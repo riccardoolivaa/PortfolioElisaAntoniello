@@ -4,12 +4,12 @@ export default function CV() {
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="section-padding bg-primary-900 text-white">
+      <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom">
           <h1 className="text-5xl md:text-6xl font-serif mb-6 animate-fade-in">
             Curriculum Vitae
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl animate-fade-in animate-delay-100">
+          <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
             Professional experience, education, and skills in scenic design and theatrical production
           </p>
         </div>

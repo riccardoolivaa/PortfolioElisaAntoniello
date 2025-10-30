@@ -30,12 +30,12 @@ export default function Contact() {
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="section-padding bg-primary-900 text-white">
+      <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom">
           <h1 className="text-5xl md:text-6xl font-serif mb-6 animate-fade-in">
             Get in Touch
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl animate-fade-in animate-delay-100">
+          <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
             Let's collaborate on your next theatrical production or discuss design opportunities
           </p>
         </div>
@@ -214,10 +214,10 @@ export default function Contact() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-primary-900 text-white">
+      <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom text-center">
           <h2 className="text-4xl font-serif mb-6">Ready to Collaborate?</h2>
-          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-black/80 mb-8 max-w-2xl mx-auto">
             Whether you're planning a production or exploring creative possibilities, 
             I'd love to hear about your project.
           </p>

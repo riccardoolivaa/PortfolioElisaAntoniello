@@ -6,6 +6,21 @@ media_folder: public/images
 public_folder: /images
 
 collections:
+  # Immagini Statiche del Sito
+  - name: "site-images"
+    label: "Immagini Sito"
+    files:
+      - label: "Immagini Principali"
+        name: "site-images"
+        file: "content/settings/site-images.yml"
+        fields:
+          - { label: "Hero Image (Homepage)", name: "heroImage", widget: "image", hint: "Immagine principale della homepage (consigliato: 1920x1080px)" }
+          - { label: "About - Foto Professionale", name: "aboutProfessional", widget: "image", hint: "Foto professionale per pagina About" }
+          - { label: "About - Foto Backstage", name: "aboutBackstage", widget: "image", hint: "Foto dietro le quinte per pagina About" }
+          - { label: "About - Anteprima Homepage", name: "aboutPreview", widget: "image", hint: "Anteprima About in homepage" }
+          - { label: "Logo/Favicon", name: "logo", widget: "image", required: false, hint: "Logo del sito" }
+
+  # Progetti
   - name: "projects"
     label: "Progetti"
     folder: "content/projects"
@@ -13,29 +28,35 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Titolo", name: "title", widget: "string" }
-      - { label: "Categoria", name: "category", widget: "select", options: ["Allestimento", "Illuminotecnica", "Audio", "Fotografia"] }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Scenic Design", "Lighting", "Audio", "Photography"] }
       - { label: "Anno", name: "year", widget: "string" }
       - { label: "Data", name: "date", widget: "datetime" }
       - { label: "Immagine di copertina", name: "coverImage", widget: "image" }
-      - { label: "Descrizione breve", name: "excerpt", widget: "text" }
-      - { label: "Contenuto", name: "body", widget: "markdown" }
+      - { label: "Descrizione breve", name: "excerpt", widget: "text", hint: "Breve descrizione che appare nelle card" }
+      - { label: "Descrizione completa", name: "description", widget: "text", hint: "Descrizione che appare nella pagina del progetto" }
+      - { label: "Cliente", name: "client", widget: "string", required: false }
+      - { label: "Ruolo", name: "role", widget: "string", required: false }
+      - { label: "Team", name: "team", widget: "list", required: false, field: { label: "Membro", name: "member", widget: "string" } }
+      - { label: "Contenuto Dettagliato", name: "body", widget: "markdown" }
       - label: "Galleria"
         name: "gallery"
         widget: "list"
+        required: false
         fields:
           - { label: "Immagine", name: "image", widget: "image" }
           - { label: "Didascalia", name: "caption", widget: "string" }
-          - { label: "Watermark", name: "watermark", widget: "boolean", default: false }
-      - { label: "Video URL", name: "videoUrl", widget: "string", required: false }
-      - { label: "Abilita Prima/Dopo", name: "beforeAfter", widget: "boolean", default: false, required: false }
+          - { label: "Scaricabile", name: "downloadable", widget: "boolean", default: false }
+      - { label: "Video URL", name: "videoUrl", widget: "string", required: false, hint: "URL YouTube o Vimeo" }
+      - { label: "Abilita Prima/Dopo", name: "beforeAfterEnabled", widget: "boolean", default: false, required: false }
       - label: "Immagini Prima/Dopo"
-        name: "beforeAfterImages"
+        name: "beforeAfter"
         widget: "object"
         required: false
         fields:
           - { label: "Prima", name: "before", widget: "image", required: false }
           - { label: "Dopo", name: "after", widget: "image", required: false }
 
+  # Pagina About
   - name: "pages"
     label: "Pagine"
     files:
@@ -44,18 +65,23 @@ collections:
         file: "content/pages/about.md"
         fields:
           - { label: "Titolo", name: "title", widget: "string" }
-          - { label: "Biografia", name: "bio", widget: "text" }
-          - { label: "Foto profilo", name: "profileImage", widget: "image" }
-          - { label: "Foto backstage", name: "backstageImage", widget: "image" }
+          - { label: "Tagline", name: "tagline", widget: "text" }
+          - { label: "Biografia", name: "bio", widget: "markdown" }
           - label: "Competenze"
             name: "skills"
             widget: "list"
             fields:
               - { label: "Nome", name: "name", widget: "string" }
-              - { label: "Livello", name: "level", widget: "number", min: 0, max: 100 }
+              - { label: "Livello", name: "level", widget: "number", min: 0, max: 100, value_type: "int" }
               - { label: "Descrizione", name: "description", widget: "string" }
+              - { label: "Icona", name: "icon", widget: "select", options: ["Theater", "Lightbulb", "Volume2", "Camera", "Wrench", "Users"], default: "Theater" }
+              - { label: "Colore", name: "color", widget: "select", options: ["bronze", "moss", "brick", "stone"], default: "bronze" }
+          - { label: "Cliente", name: "client", widget: "string", required: false }
+          - { label: "Ruolo", name: "role", widget: "string", required: false }
+          - { label: "Team", name: "team", widget: "list", required: false, field: { label: "Membro", name: "member", widget: "string" } }
           - { label: "Contenuto aggiuntivo", name: "body", widget: "markdown" }
 
+  # Impostazioni Generali
   - name: "settings"
     label: "Impostazioni"
     files:
@@ -67,17 +93,49 @@ collections:
           - { label: "Tagline", name: "tagline", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Telefono", name: "phone", widget: "string" }
-          - { label: "WhatsApp", name: "whatsapp", widget: "string" }
-          - { label: "Instagram", name: "instagram", widget: "string" }
-          - { label: "CV PDF", name: "cvFile", widget: "file" }
+          - { label: "WhatsApp", name: "whatsapp", widget: "string", hint: "Numero con prefisso internazionale senza + (es: 393901234567)" }
+          - { label: "Instagram Username", name: "instagram", widget: "string", hint: "Solo username, senza @" }
+          - { label: "CV PDF", name: "cvFile", widget: "file", required: false }
 
+      - label: "SEO"
+        name: "seo"
+        file: "content/settings/seo.json"
+        fields:
+          - { label: "Titolo Sito", name: "title", widget: "string" }
+          - { label: "Descrizione", name: "description", widget: "text" }
+          - { label: "Keywords", name: "keywords", widget: "list", field: { label: "Keyword", name: "keyword", widget: "string" } }
+          - { label: "Immagine Social", name: "ogImage", widget: "image", required: false }
+
+  # Chatbot
   - name: "chatbot"
     label: "Chatbot"
-    folder: "content/chatbot"
+    files:
+      - label: "Impostazioni Chatbot"
+        name: "chatbot-settings"
+        file: "content/settings/chatbot.json"
+        fields:
+          - { label: "Nome Bot", name: "name", widget: "string", default: "La Maschera di Scena" }
+          - { label: "Messaggio di Benvenuto", name: "welcomeMessage", widget: "text" }
+          - label: "Risposte Predefinite"
+            name: "responses"
+            widget: "object"
+            fields:
+              - { label: "Risposta Progetti", name: "projects", widget: "text" }
+              - { label: "Risposta Contatti", name: "contact", widget: "text" }
+              - { label: "Risposta CV", name: "cv", widget: "text" }
+              - { label: "Risposta Gallery", name: "gallery", widget: "text" }
+              - { label: "Risposta Skills", name: "skills", widget: "text" }
+
+  # Gallery
+  - name: "gallery"
+    label: "Galleria"
+    folder: "content/gallery"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Domanda", name: "question", widget: "string" }
-      - { label: "Risposta", name: "answer", widget: "text" }
-      - { label: "Keywords", name: "keywords", widget: "list" }
-      - { label: "Azione", name: "action", widget: "string", required: false }
+      - { label: "Titolo", name: "title", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["scenic", "lighting", "audio", "photography"] }
+      - { label: "Immagine", name: "image", widget: "image" }
+      - { label: "Descrizione", name: "alt", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime" }
+      - { label: "Ordine", name: "order", widget: "number", required: false, hint: "Numero per ordinare le immagini" }

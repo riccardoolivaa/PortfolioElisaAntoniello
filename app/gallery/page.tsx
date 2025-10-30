@@ -60,12 +60,12 @@ export default function Gallery() {
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="section-padding bg-primary-900 text-white">
+      <section className="section-padding bg-primary-900 text-black">
         <div className="container-custom">
           <h1 className="text-5xl md:text-6xl font-serif mb-6 animate-fade-in">
             Gallery
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl animate-fade-in animate-delay-100">
+          <p className="text-xl text-black/80 max-w-3xl animate-fade-in animate-delay-100">
             Visual documentation of my theatrical journey - from design concepts to final productions
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function Gallery() {
                 }}
                 className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 capitalize ${
                   selectedCategory === category
-                    ? 'bg-accent text-white stage-shadow'
+                    ? 'bg-accent text-bronze-600 stage-shadow'
                     : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                 }`}
               >
@@ -113,7 +113,7 @@ export default function Gallery() {
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                  <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-sm font-medium text-center px-2">
                       {image.alt}
                     </p>
