@@ -1,0 +1,82 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: "projects"
+    label: "Progetti"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titolo", name: "title", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Allestimento", "Illuminotecnica", "Audio", "Fotografia"] }
+      - { label: "Anno", name: "year", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime" }
+      - { label: "Immagine di copertina", name: "coverImage", widget: "image" }
+      - { label: "Descrizione breve", name: "excerpt", widget: "text" }
+      - { label: "Contenuto", name: "body", widget: "markdown" }
+      - label: "Galleria"
+        name: "gallery"
+        widget: "list"
+        fields:
+          - { label: "Immagine", name: "image", widget: "image" }
+          - { label: "Didascalia", name: "caption", widget: "string" }
+          - { label: "Watermark", name: "watermark", widget: "boolean", default: false }
+      - { label: "Video URL", name: "videoUrl", widget: "string", required: false }
+      - { label: "Prima/Dopo", name: "beforeAfter", widget: "boolean", default: false }
+      - label: "Immagini Prima/Dopo"
+        name: "beforeAfterImages"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Prima", name: "before", widget: "image" }
+          - { label: "Dopo", name: "after", widget: "image" }
+
+  - name: "pages"
+    label: "Pagine"
+    files:
+      - label: "About"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - { label: "Titolo", name: "title", widget: "string" }
+          - { label: "Biografia", name: "bio", widget: "text" }
+          - { label: "Foto profilo", name: "profileImage", widget: "image" }
+          - { label: "Foto backstage", name: "backstageImage", widget: "image" }
+          - label: "Competenze"
+            name: "skills"
+            widget: "list"
+            fields:
+              - { label: "Nome", name: "name", widget: "string" }
+              - { label: "Livello", name: "level", widget: "number", min: 0, max: 100 }
+              - { label: "Descrizione", name: "description", widget: "string" }
+
+  - name: "settings"
+    label: "Impostazioni"
+    files:
+      - label: "Generale"
+        name: "general"
+        file: "content/settings/general.yml"
+        fields:
+          - { label: "Nome del sito", name: "siteName", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Telefono", name: "phone", widget: "string" }
+          - { label: "WhatsApp", name: "whatsapp", widget: "string" }
+          - { label: "Instagram", name: "instagram", widget: "string" }
+          - { label: "CV PDF", name: "cvFile", widget: "file" }
+
+  - name: "chatbot"
+    label: "Chatbot"
+    folder: "content/chatbot"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Domanda", name: "question", widget: "string" }
+      - { label: "Risposta", name: "answer", widget: "text" }
+      - { label: "Keywords", name: "keywords", widget: "list" }
+      - { label: "Azione", name: "action", widget: "string", required: false }

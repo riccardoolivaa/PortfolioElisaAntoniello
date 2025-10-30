@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
+  }
+
+  * {
+    @apply border-neutral-200;
+  }
+
+  body {
+    @apply text-neutral-900 bg-white;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .spotlight-effect {
+    @apply relative overflow-hidden;
+  }
+
+  .spotlight-effect::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(139, 64, 64, 0.1) 0%,
+      transparent 50%
+    );
+  }
+
+  .spotlight-effect:hover::before {
+    @apply opacity-100;
+  }
+
+  .theater-shadow {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      inset 0 -2px 0 0 rgba(139, 64, 64, 0.05);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-theater-600 to-theater-400 bg-clip-text text-transparent;
+  }
+
+  .button-primary {
+    @apply px-6 py-3 bg-theater-500 text-white rounded-lg font-medium
+           hover:bg-theater-600 transform transition-all duration-200
+           hover:scale-[1.02] active:scale-[0.98] theater-shadow;
+  }
+
+  .button-secondary {
+    @apply px-6 py-3 bg-neutral-100 text-neutral-900 rounded-lg font-medium
+           hover:bg-neutral-200 transform transition-all duration-200
+           hover:scale-[1.02] active:scale-[0.98] border border-neutral-200;
+  }
+
+  .card {
+    @apply bg-white rounded-xl border border-neutral-200 p-6
+           hover:border-neutral-300 transition-all duration-300
+           hover:shadow-lg;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-400;
+}
+
+/* Focus styles */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  @apply ring-2 ring-theater-500 ring-offset-2;
+}
