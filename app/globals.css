@@ -1,104 +1,147 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 255, 255, 255;
-    --background-end-rgb: 255, 255, 255;
+    --spotlight-size: 300px;
+  }
+  
+  body {
+    @apply bg-warm-white text-primary-800;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   * {
-    @apply border-neutral-200;
-  }
-
-  body {
-    @apply text-neutral-900 bg-white;
+    @apply transition-colors duration-200;
   }
 }
 
 @layer components {
-  .container-custom {
-    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  /* Spotlight Effect */
+  .spotlight-hover {
+    position: relative;
+    overflow: hidden;
   }
 
-  .spotlight-effect {
-    @apply relative overflow-hidden;
-  }
-
-  .spotlight-effect::before {
+  .spotlight-hover::before {
     content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
     background: radial-gradient(
-      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(139, 64, 64, 0.1) 0%,
-      transparent 50%
+      circle at center,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 60%
     );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
   }
 
-  .spotlight-effect:hover::before {
-    @apply opacity-100;
+  .spotlight-hover:hover::before {
+    opacity: 1;
   }
 
-  .theater-shadow {
+  /* Theater Curtain Effect */
+  .curtain-effect {
+    animation: curtain 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Stage Shadow */
+  .stage-shadow {
     box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06),
-      inset 0 -2px 0 0 rgba(139, 64, 64, 0.05);
+      0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.05),
+      inset 0 2px 4px rgba(255, 255, 255, 0.06);
   }
 
-  .text-gradient {
-    @apply bg-gradient-to-r from-theater-600 to-theater-400 bg-clip-text text-transparent;
+  .stage-shadow:hover {
+    box-shadow: 
+      0 20px 35px -5px rgba(0, 0, 0, 0.15),
+      0 10px 15px -6px rgba(0, 0, 0, 0.08),
+      inset 0 2px 4px rgba(255, 255, 255, 0.06);
   }
 
-  .button-primary {
-    @apply px-6 py-3 bg-theater-500 text-white rounded-lg font-medium
-           hover:bg-theater-600 transform transition-all duration-200
-           hover:scale-[1.02] active:scale-[0.98] theater-shadow;
+  /* Cursor Light Effect */
+  .cursor-light {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/></svg>') 16 16, auto;
   }
 
-  .button-secondary {
-    @apply px-6 py-3 bg-neutral-100 text-neutral-900 rounded-lg font-medium
-           hover:bg-neutral-200 transform transition-all duration-200
-           hover:scale-[1.02] active:scale-[0.98] border border-neutral-200;
+  /* Button Styles */
+  .btn-primary {
+    @apply px-6 py-3 bg-accent text-white rounded-lg font-medium;
+    @apply hover:bg-accent-dark transition-all duration-300;
+    @apply stage-shadow;
   }
 
-  .card {
-    @apply bg-white rounded-xl border border-neutral-200 p-6
-           hover:border-neutral-300 transition-all duration-300
-           hover:shadow-lg;
+  .btn-secondary {
+    @apply px-6 py-3 bg-primary-100 text-primary-800 rounded-lg font-medium;
+    @apply hover:bg-primary-200 transition-all duration-300;
+  }
+
+  /* Card Styles */
+  .project-card {
+    @apply bg-white rounded-xl overflow-hidden;
+    @apply stage-shadow spotlight-hover;
+    @apply transform transition-all duration-300;
+  }
+
+  .project-card:hover {
+    @apply -translate-y-2;
+  }
+
+  /* Section Padding */
+  .section-padding {
+    @apply py-20 px-6 md:px-12 lg:px-24;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto;
   }
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-neutral-50;
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300 rounded-full;
+  background: #adb5bd;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-400;
-}
-
-/* Focus styles */
-*:focus {
-  outline: none;
-}
-
-*:focus-visible {
-  @apply ring-2 ring-theater-500 ring-offset-2;
+  background: #6c757d;
 }
