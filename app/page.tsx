@@ -13,7 +13,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <div className="relative w-full h-full">
             <Image
-              src="/images/hero-placeholder.jpg"
+              src="/images/hero-placeholder.png"
               alt="Scenic Design"
               fill
               className="object-cover opacity-90"
